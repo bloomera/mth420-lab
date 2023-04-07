@@ -16,7 +16,7 @@ def sphere_volume(r):
     """ Return the volume of the sphere of radius 'r'.
     Use 3.14159 for pi in your computation.
     """
-    return 4 / 3 * 3.14159 * r**2
+    return 4 / 3 * 3.14159 * r**3
 
 if __name__ == "__main__":
     print(sphere_volume(1))
