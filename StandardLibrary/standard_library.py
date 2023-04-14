@@ -1,8 +1,8 @@
 # standard_library.py
 """Python Essentials: The Standard Library.
-<Name>
-<Class>
-<Date>
+Adrian Bloomer
+MTH 420
+April 14
 """
 
 
@@ -11,7 +11,9 @@ def prob1(L):
     """Return the minimum, maximum, and average of the entries of L
     (in that order, separated by a comma).
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    return min(L), max(L), sum(L)/len(L)
+
+print(prob1([1, 2, 3]))
 
 
 # Problem 2
@@ -19,8 +21,34 @@ def prob2():
     """Determine which Python objects are mutable and which are immutable.
     Test integers, strings, lists, tuples, and sets. Print your results.
     """
-    raise NotImplementedError("Problem 2 Incomplete")
+    v1 = 1
+    v2 = v1
+    v2 += 1
+    print("int", "is mutable" if v1 == v2 else "is not mutable")
+    
+    v1 = "a"
+    v2 = v1
+    v2 += "b"
+    print("string", "is mutable" if v1 == v2 else "is not mutable")
+    
+    v1 = ["a"]
+    v2 = v1
+    v2[0] = "b"
+    print("list", "is mutable" if v1 == v2 else "is not mutable")
+    
+    v1 = ("a",)
+    v2 = v1
+    v2 += ("b",)
+    print("tuple", "is mutable" if v1 == v2 else "is not mutable")
+    
+    v1 = {1, 2}
+    v2 = v1
+    v2.add(3)
+    print("set", "is mutable" if v1 == v2 else "is not mutable")
+    
+prob2()
 
+import calculator as calc
 
 # Problem 3
 def hypot(a, b):
@@ -34,8 +62,11 @@ def hypot(a, b):
     Returns:
         The length of the triangle's hypotenuse.
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    return calc.sqrt(calc.sum(calc.product(a, a), calc.product(b, b)))
 
+print(hypot(3, 4))
+
+import itertools
 
 # Problem 4
 def power_set(A):
@@ -47,7 +78,12 @@ def power_set(A):
     Returns:
         (list(sets)): The power set of A as a list of sets.
     """
-    raise NotImplementedError("Problem 4 Incomplete")
+    return [set(x) for x in itertools.chain(
+        *[itertools.combinations(A, n) for n in range(0, len(A)+1)]
+    )]
+
+print(power_set([1, 2, 3]))
+print(power_set("abc"))
 
 
 # Problem 5: Implement shut the box.
