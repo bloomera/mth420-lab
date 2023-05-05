@@ -1,8 +1,8 @@
 # lstsq_eigs.py
 """Volume 1: Least Squares and Computing Eigenvalues.
-<Name>
-<Class>
-<Date>
+Adrian Bloomer
+MTH 420
+May 5
 """
 
 # (Optional) Import functions from your QR Decomposition lab.
@@ -12,7 +12,7 @@
 
 import numpy as np
 from matplotlib import pyplot as plt
-
+from scipy import linalg as la
 
 # Problem 1
 def least_squares(A, b):
@@ -26,7 +26,8 @@ def least_squares(A, b):
     Returns:
         x ((n, ) ndarray): The solution to the normal equations.
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    q, r = la.qr(A, mode="economic")
+    return la.solve_triangular(r, q.T @ b)
 
 # Problem 2
 def line_fit():
@@ -34,8 +35,14 @@ def line_fit():
     index for the data in housing.npy. Plot both the data points and the least
     squares line.
     """
-    raise NotImplementedError("Problem 2 Incomplete")
-
+    data = np.load("housing.npy")
+    years = 2000 + data[:,0]
+    a = np.column_stack((years, np.ones(len(years))))
+    b = data[:,1]
+    x1, x2 = least_squares(a,b)
+    plt.scatter(years, b)
+    plt.plot(years, x1 * years + x2)
+    plt.show()
 
 # Problem 3
 def polynomial_fit():
@@ -43,7 +50,17 @@ def polynomial_fit():
     the year to the housing price index for the data in housing.npy. Plot both
     the data points and the least squares polynomials in individual subplots.
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    data = np.load("housing.npy")
+    years = data[:,0]
+    b = data[:,1]
+    for i, degree in enumerate([3, 6, 9, 12]):
+        plt.subplot(220 + i + 1)
+        plt.scatter(2000 + years, b, color='#454545')
+        v = np.vander(years, degree + 1)
+        coeffs = la.lstsq(v, b)[0]
+        poly = np.poly1d(coeffs)
+        plt.plot(2000 + years, poly(years), color='#FF6000')
+    plt.show()
 
 
 def plot_ellipse(a, b, c, d, e):
