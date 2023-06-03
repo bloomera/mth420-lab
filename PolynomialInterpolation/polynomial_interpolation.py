@@ -1,10 +1,12 @@
 # polynomial_interpolation.py
 """Volume 2: Polynomial Interpolation.
-<Name>
-<Class>
-<Date>
+Adrian Bloomer
+MTH 420
+June 2
 """
 
+import numpy as np
+from matplotlib import pyplot as plt
 
 # Problems 1 and 2
 def lagrange(xint, yint, points):
@@ -20,8 +22,18 @@ def lagrange(xint, yint, points):
     Returns:
         ((m,) ndarray): The value of the polynomial at the specified points.
     """
-    raise NotImplementedError("Problems 1 and 2 Incomplete")
+    n = len(xint)
+    denominators = [np.prod([xint[j] - xint[k] for k in range(0, n) if k != j]) for j in range(0, n)]
+    L = [[np.prod([x - xint[k] for k in range(0, n) if k != j]) / denominators[j] for x in points] for j in range(0, n)]
+    L = np.array(L)
+    return np.sum(np.diag(yint) @ L, axis=0)
 
+# x = [1, 3, 4, 5]
+# y = [3, 7, 5, 6]
+# plt.scatter(x, y)
+# X = np.arange(0, 6, 0.1)
+# plt.plot(X, lagrange(x, y, X))
+# plt.show()
 
 # Problems 3 and 4
 class Barycentric:
